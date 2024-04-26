@@ -1,34 +1,32 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import SearchBar from '../components/SearchBar';
+import AnimeResults from '../components/AnimeResults';
+import Nav from '../components/Nav';
 
-function Home() {
+const Home = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleTopAnimeClick = () => {
+    setSearchQuery('https://api.jikan.moe/v4/top/anime');
+  };
+
+  const handleCurrentSeasonClick = () => {
+    setSearchQuery('https://api.jikan.moe/v4/seasons/now');
+  };
+
   return (
     <div>
-      <section id="nav-bar">
-        <nav>
-          <div className="row">
-            <div className="nav__container">
-              <Link to="/" className="nav-logo__container">
-                <div className="nav-logo">
-                  <FontAwesomeIcon icon="dragon" />
-                </div>
-                <div className="nav-title">Dragon Anime</div>
-              </Link>
-              <ul className="nav__link--list">
-                <li className="nav__link">
-                  <button id="topAnimeBtn">Top Anime</button>
-                </li>
-                <li className="nav__link">
-                  <button id="currentSeasonBtn">Current Season Anime</button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </section>
+      <Nav />
+      <button onClick={handleTopAnimeClick}>Top Anime</button>
+      <button onClick={handleCurrentSeasonClick}>Current Season</button>
+      <SearchBar onSearch={handleSearch} />
+      <AnimeResults searchQuery={searchQuery} />
     </div>
   );
-}
+};
 
 export default Home;
