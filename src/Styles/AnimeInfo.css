@@ -44,11 +44,14 @@
   margin-bottom: 48px;
 }
 
-.animeInfo__Link--Home {
+.animeInfo__link__container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 24px;
+}
+
+.animeInfo__Link--Home {
   transition: all 500ms ease;
 }
 

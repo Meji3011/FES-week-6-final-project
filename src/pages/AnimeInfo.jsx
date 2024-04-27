@@ -103,9 +103,11 @@ const AnimeInfo = () => {
           </div>
         </div>
       )}
-      <Link to="/" className="animeInfo__Link--Home">
-        <button>Back to Home</button>
-      </Link>
+      <div className="animeInfo__link__container">
+        <Link to="/" className="animeInfo__Link--Home">
+          <button>Back to Home</button>
+        </Link>
+      </div>
     </div>
   );
 };
