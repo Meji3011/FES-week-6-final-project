@@ -1,0 +1,35 @@
+#nav-bar {
+  padding: 32px 32px 0 32px;
+}
+
+.row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.nav__container {
+  display: flex;
+}
+
+.nav--logo__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  transition: all 500ms ease;
+}
+
+.nav--logo {
+  font-size: 48px;
+}
+
+.nav--title {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.nav--logo__container:hover {
+  color: #38cdbc;
+  transform: scale(1.1);
+}

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
+import "../Styles/AnimeResults.css";
 
 const AnimeResults = ({ searchQuery }) => {
   const [animeData, setAnimeData] = useState([]);
@@ -42,18 +45,29 @@ const AnimeResults = ({ searchQuery }) => {
   return (
     <div>
       {isLoading ? (
-        <p>Loading...</p>
-      ) : animeData.length > 0 ? (
-        <ul>
-          {animeData.map((anime) => (
-            <li key={anime.mal_id}>
-              <Link to={`/anime/${anime.mal_id}`}>
-                <img src={anime.images.jpg.image_url} alt={anime.title} />
-                <span>{anime.title}</span>
-              </Link>
-            </li>
+        <div className="animeResult__container">
+          {[...Array(12)].map((_, index) => (
+            <div key={index} className="animeResult__item">
+              <Skeleton width={225} height={325} />
+              <Skeleton width={200} height={24} style={{ marginTop: "10px" }} />
+            </div>
           ))}
-        </ul>
+        </div>
+      ) : animeData.length > 0 ? (
+        <div className="animeResult__container">
+          {animeData.map((anime) => (
+            <div key={anime.mal_id} className="animeResult__item">
+              <Link to={`/anime/${anime.mal_id}`}>
+                <img
+                  className="anime--icon"
+                  src={anime.images.jpg.image_url}
+                  alt={anime.title}
+                />
+                <span className="anime--title">{anime.title}</span>
+              </Link>
+            </div>
+          ))}
+        </div>
       ) : searchQuery ? (
         <p>No results found.</p>
       ) : null}

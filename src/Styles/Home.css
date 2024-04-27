@@ -1,0 +1,12 @@
+.Home__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Home--buttons__container {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 12px;
+}
