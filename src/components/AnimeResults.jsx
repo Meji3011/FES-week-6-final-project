@@ -9,14 +9,16 @@ const AnimeResults = ({ searchQuery }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchAndDisplayAnime = async (url) => {
+    const fetchAnime = async (url) => {
       setIsLoading(true);
       try {
         const response = await fetch(url);
-
+  
         if (response.ok) {
           const jsonResponse = await response.json();
-          setAnimeData(jsonResponse.data.slice(0, 12));
+          const slicedData = jsonResponse.data.slice(0, 12);
+          setAnimeData(slicedData);
+          console.log("Anime Data:", slicedData);
         } else {
           console.error("Failed to fetch anime data:", response.statusText);
         }
@@ -25,21 +27,24 @@ const AnimeResults = ({ searchQuery }) => {
       }
       setIsLoading(false);
     };
-
+  
     if (searchQuery) {
-      if (searchQuery.startsWith("https://")) {
-        // If the searchQuery is a direct API URL
-        fetchAndDisplayAnime(searchQuery);
+      if (searchQuery.startsWith("https://api.jikan.moe/v4/anime?q=")) {
+        // If the searchQuery is a search term URL
+        fetchAnime(searchQuery);
       } else {
-        // If the searchQuery is a search term
-        const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(
-          searchQuery
-        )}&limit=12`;
-        fetchAndDisplayAnime(url);
+        // If the searchQuery is a direct API URL or a search term
+        const url = searchQuery.startsWith("https://")
+          ? searchQuery
+          : `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(searchQuery)}`;
+        fetchAnime(url);
       }
-    } else {
-      setAnimeData([]);
     }
+  
+    // Cleanup function
+    return () => {
+      setAnimeData([]);
+    };
   }, [searchQuery]);
 
   return (
@@ -55,8 +60,8 @@ const AnimeResults = ({ searchQuery }) => {
         </div>
       ) : animeData.length > 0 ? (
         <div className="animeResult__container">
-          {animeData.map((anime) => (
-            <div key={anime.mal_id} className="animeResult__item">
+          {animeData.map((anime, index) => (
+            <div key={index} className="animeResult__item">
               <Link to={`/anime/${anime.mal_id}`}>
                 <img
                   className="anime--icon"
